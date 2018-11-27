@@ -1,23 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:600,700');
+
 body {
 	background: #f5f6f9;
 }
 
 td {
-	border: 7.5px solid #7983ff;
+	border: 1.5px solid #7983ff;
 	height: 100px;
 	width: 100px;
 	text-align: center;
 	vertical-align: center;
 	font-size: 70px;
+	color: white;
 	cursor: pointer;
+	z-index: 200;
 }
 
 table {
+	width: 300px;
+	height: 300px;
 	border-collapse: collapse;
 	position: absolute;
 	left: 50%;
 	margin-left: -155px;
-	top: 50px;
+	top: 150px;
+	-webkit-animation: fadein 2s;
+	-moz-animation: fadein 2s;
+	-ms-animation: fadein 2s;
+	-o-animation: fadein 2s;
+	animation: fadein 2s;
+	moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	-khtml-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+
+	padding: 10px;
 }
 
 table tr:first-child td {
@@ -36,11 +53,56 @@ table tr td:last-child {
 	border-right: none;
 }
 
+.box-flex {
+	position: absolute;
+	left: 50%;
+	margin-left: -155px;
+	top: 100px;
+
+	display: flex;
+	flex-direction: row;
+}
+
+.box-flex div {
+	width: 100px;
+	height: 35px;
+	background: #f5f6f9;
+	text-align: center;
+	vertical-align: center;
+	padding-top: 15px;
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: 600;
+	color: #7983ff;
+	font-size: 1.2em;
+	z-index: 100;
+	moz-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+	-khtml-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.box-flex div:nth-child(2) {
+	background: #ff7b74;
+	color: #ffffff;
+	moz-box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+	-khtml-box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+	-webkit-box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.1);
+	z-index: 300;
+}
+
 .endgame {
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: 600;
+	text-align: center;
+	vertical-align: center;
 	display: none;
 	width: 200px;
-	top: 120px;
-	background-color: rgba(205, 133, 63, 0.8);
+	top: 200px;
+	/* background-image: linear-gradient(135deg, #ff4c9f, #ff7b74b6); */
+	background-image: linear-gradient(135deg, #ff4ca0c1, #ff7b74b6);
+	border: none;
+	color: #fff;
 	position: absolute;
 	left: 50%;
 	margin-left: -100px;
@@ -48,6 +110,113 @@ table tr td:last-child {
 	padding-bottom: 50px;
 	text-align: center;
 	border-radius: 5px;
-	color: white;
 	font-size: 2em;
+}
+
+.btn-start {
+	position: absolute;
+	left: 50%;
+	margin-left: -155px;
+	top: 450px;
+
+	height: 50px;
+	width: 300px;
+	position: relative;
+	background: #7983ff;
+	padding: 0.5rem 1rem;
+	font-size: 1.2rem;
+	border: none;
+	color: white;
+	cursor: pointer;
+	outline: none;
+	overflow: hidden;
+	moz-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	-khtml-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-start span {
+	position: relative;
+}
+
+.btn-start::before {
+	--size: 0;
+	content: '';
+	position: absolute;
+	left: var(--x);
+	top: var(--y);
+	width: var(--size);
+	height: var(--size);
+	background: radial-gradient(circle closest-side, pink, transparent);
+	transform: translate(-50%, -50%);
+	transition: width 0.2s ease, height 0.2s ease;
+	opacity: 0.5;
+}
+
+.btn-start:hover::before {
+	--size: 200px;
+	opacity: 0.5;
+}
+
+.btn,
+.cell {
+	font-family: 'IBM Plex Sans', sans-serif;
+	font-weight: 700;
+	-webkit-animation: fadein 2s;
+	-moz-animation: fadein 2s;
+	-ms-animation: fadein 2s;
+	-o-animation: fadein 2s;
+	animation: fadein 2s;
+}
+
+@keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@-moz-keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+
+@-webkit-keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@-ms-keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@-o-keyframes fadein {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
 }

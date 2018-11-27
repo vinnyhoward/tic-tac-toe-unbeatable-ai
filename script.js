@@ -1,4 +1,7 @@
 let originalBoard;
+let humanWins = 0;
+let aiWins = 0;
+
 const humanPlayer = 'O';
 const aiPlayer = 'X';
 const winCombos = [
@@ -16,12 +19,15 @@ const cells = document.querySelectorAll('.cell');
 startGame();
 
 function startGame() {
+	document.querySelector('.ai-score').innerText = aiWins;
+	document.querySelector('.human-score').innerText = humanWins;
 	document.querySelector('.endgame').style.display = 'none';
 	originalBoard = Array.from(Array(9).keys());
 
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].innerText = '';
 		cells[i].style.removeProperty('background-color');
+		cells[i].style.removeProperty('box-shadow');
 		cells[i].addEventListener('click', turnClick, false);
 	}
 }
@@ -36,6 +42,7 @@ function turnClick(square) {
 function turn(squareId, player) {
 	originalBoard[squareId] = player;
 	document.getElementById(squareId).innerText = player;
+	document.getElementById(squareId).style.background = '#7983ff';
 	let gameWon = checkWin(originalBoard, player);
 
 	if (gameWon) gameOver(gameWon);
@@ -56,14 +63,28 @@ function checkWin(board, player) {
 }
 
 function gameOver(gameWon) {
+	gameWon.player == humanPlayer ? humanWins++ : aiWins++;
 	for (let index of winCombos[gameWon.index]) {
-		document.getElementById(index).style.backgroundColor = gameWon.player == humanPlayer ? 'blue' : 'red';
+		console.log('humans:', humanWins, 'ai:', aiWins);
+		document.getElementById(index).style.backgroundColor = gameWon.player == humanPlayer ? 'blue' : '#56598a';
+		document.getElementById(index).style.boxShadow =
+			gameWon.player == humanPlayer ? 'inset 0 0 5px #00000012' : 'inset 0 0 10px #0000003b';
 	}
 
 	for (var i = 0; i < cells.length; i++) {
 		cells[i].removeEventListener('click', turnClick, false);
 	}
-	declareWinner(gameWon.player === humanPlayer ? 'You Win!' : 'AI schooled you boy');
+	declareWinner(gameWon.player === humanPlayer ? 'You Win!' : aiGloating());
+}
+
+function aiGloating() {
+	const gloating = [
+		'AI takeover here we come',
+		'AI schooled you boy',
+		'First AI will takeover tic tac toe, then your job',
+		'AI, Flawless Victory'
+	];
+	return gloating[Math.floor(Math.random() * gloating.length)];
 }
 
 function declareWinner(who) {
@@ -82,10 +103,10 @@ function bestSpot() {
 function checkTie() {
 	if (emptySquares().length === 0) {
 		for (let i = 0; i < cells.length; i++) {
-			cells[i].style.backgroundColor = 'green';
+			cells[i].style.backgroundColor = '#a7aada';
 			cells[i].removeEventListener('click', turnClick, false);
 		}
-		declareWinter('Tie Game');
+		declareWinner('Tie Game');
 		return true;
 	}
 	return false;
@@ -94,7 +115,7 @@ function checkTie() {
 function minMax(newBoard, player) {
 	let availSpots = emptySquares();
 
-	if (checkWin(newBoard, player)) {
+	if (checkWin(newBoard, humanPlayer)) {
 		return { score: -10 };
 	} else if (checkWin(newBoard, aiPlayer)) {
 		return { score: 10 };
@@ -142,3 +163,12 @@ function minMax(newBoard, player) {
 	}
 	return moves[bestMove];
 }
+
+var btn = document.querySelector('.btn-start');
+
+btn.onmousemove = function(e) {
+	var x = e.pageX - btn.offsetLeft - btn.offsetParent.offsetLeft;
+	var y = e.pageY - btn.offsetTop - btn.offsetParent.offsetTop;
+	btn.style.setProperty('--x', x + 'px');
+	btn.style.setProperty('--y', y + 'px');
+};
